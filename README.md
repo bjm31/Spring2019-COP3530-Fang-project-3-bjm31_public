@@ -18,7 +18,7 @@ Developer a program that uses:
 
 ## Preparation:
 
-To complete this project, you need to make sure that you have read the following (notice that topics build upon each other):
+To complete this project, you need to make sure that you have read the following (notice that topics between projects build upon each other):
 
 - Chapter 3 - Strings
 - Chapter 4 - Array and Vector Basics
@@ -34,7 +34,7 @@ A Racko deck is composed of 60 cards, each numbered 1 to 60. The objective is to
 
 The start of a game of Racko will begin with the deck of cards being shuffled (please read the section on data structure requirements). Each player will be dealt 10 cards. The hands dealt to each player form the player's hand, called a "rack". A rack is special in that each card in the hand has a fixed position (from 1 to 10). As a player receives each card, they must place it in the highest available slot in their rack starting at slot 10, without rearranging any of the cards. The goal of each hand is to create a sequence of numbers in ascending order, starting at slot 1 and going all the way through slot 10.
 
-The top card of the deck is turned over to start the discard pile. A player takes a turn by taking the top card from either the deck or the discard pile, then discarding one from their rack and inserting the new card in its place. If the player draws a card from the deck, they may immediately discard it; if they take the top discard, though, they must put it into their rack. The first player to get their 10 cards in ascending order calls ”Rack-O!” and wins the hand.
+The top card of the deck is turned over to start the discard pile. A player takes a turn by taking the top card from either the deck or the discard pile, then discarding one from their rack and inserting the new card in its place. A player may choose to discard the card if they wish (note that pulling from the discard pile and then discarding would be equivalent to a skipped turn). The first player to get their 10 cards in ascending order calls ”Rack-O!” and wins the hand.
 
 ## Overview of the Interface:
 
@@ -54,7 +54,7 @@ Enter player number 1's name: brian
 Is this a computer? Enter 1 for yes, 0 for no: 0
 ```
 
-Given the choices, there is only one option for the player, so the player moves to the East:
+After the information is entered, it shows the hand for the first player. If the player is the first human player in the round, then it should print the round number. Either way, it should print the current player's turn, the player's hand\rack, the top of the discard pile, and the options to pull from the discard pile or the top of the deck. A rack is arranged from the slot 1 at the top to slot 10 at the bottom. Each number should be moved over the number of spaces represented by the card. This means that the 38 has been spaced over 38 spaces from the left hand side. You should note that 10 has an extra digit from other numbers so to account for the 0, lines with other numbers should have an additional space. 
 
 ```
 ###########################################################################
@@ -75,53 +75,91 @@ Available card in discard pile: 13
 Enter 'p' to get the card from the discard pile, or 'd' to draw the unknown card from the top of the deck:
 ```
 
-When a player enters a room, they loot the room of all items. Entering that room again should show that there are no objects in the room. 
-
-If the player chooses a path that is currently blocked, either by a solid wall or because they don't have a needed key,
-then the game should output the message "You can't go that way!" and then prompt for another direction. The player may at any time, also choose to
-enter "Q" in which case the output should be "Better luck next time!" and the program should end.
-
-If the player makes it through an exit, then the program should output "It took you x moves, but you're free!" where x is the number of moves that the player
-took to get out of the maze. Then the program should end. There can be multiple exits in a maze. An exit is a passageway that leads out of the maze.
-The player wins when they travel through that passageway. In our example, if the player has reached The Exit, they still need to move East again to win.
-
-## Data format:
-
-A maze is specified by an input file with the following format:
+For each player's turn, they will need to select whether they want the card from the discard or the unseen deck. Then, they can select to replace one of the cards in a slot or to discard the card by entering a number less than 1:
 
 ```
-Row_count,Column_count
-Room_name,North_passageway,East_passageway,South_passageway,West_passageway,list_of_items_in_room
+Enter 'p' to get the card from the discard pile, or 'd' to draw the unknown card from the top of the deck: d
+Enter the slot number from the left edge of the display that you want to replace with 32. Less than 1 simply discards the card: 4
 ```
 
-The first line of the input file is the number of rows (Row_count) and the number of columns (Column_count)
-in the maze. The first line is followed by Row_count x Column_count lines with each line representing a different Room in the maze.
-
-Each room has a name, four connected passageways, and a list of items in that room. Each passageway in a room is one of three types:
-
-1. "-": No passage is allowed
-1. "+": Passage is open
-1. "item_needed_to_open_passageway": Requires the item(s) specified to open the door
-
-The input file for our example maze would look like the following:
+The given selection will result in the following rack:
 
 ```
-2 3
-The Start,-,+,red_key,-,axe blue_key
-The Landing,-,+,-,+,
-Master Bedroom,-,-,-,+,red_key
-The Kitchen,red_key,+,-,-,
-The Hall,-,+,-,+,
-The Exit!,-,+,-,+,
+##########################################################################
+Round 1
+a's turn
+HAND:
+1:                                      38
+2:                                               47
+3:                                          42
+4:                                32
+5:                16
+6:                                            44
+7:                                              46
+8:           11
+9:                 17
+10:                         25
+Available card in discard pile: 29
+Enter 'p' to get the card from the discard pile, or 'd' to draw the unknown card from the top of the deck:
 ```
 
-Note that the list of items in the room is not comma-separated.
+For computer turns, you should simply print the result of their actions (the selections are done by the computer in this case and not by user input):
+
+```
+--------------------------------------------------------------------------
+computer's turn
+HAND:
+1:                     21
+2:                                                    52
+3:          10
+4:                             29
+5:                          26
+6:                                                 49
+7:      6
+8:                                                   51
+9:                                                       55
+10:                                                            60
+Available card in discard pile: 41
+p
+Enter the slot number from the left edge of the display that you want to replace with 41. Less than 1 simply discards the card: 4
+```
+
+A player wins when they can put their cards within an ascending sequence. A sequence does not need to be continuous (i.e., there can be gaps):
+
+```
+##########################################################################
+Round 14
+brian's turn
+HAND:
+1:  2
+2:          10
+3:                             29
+4:                                32
+5:                                          42
+6:                                            44
+7:                                              46
+8:                                                 49
+9:                                                       55
+10:                         25
+Available card in discard pile: 20
+Enter 'p' to get the card from the discard pile, or 'd' to draw the unknown card from the top of the deck: d
+Enter the slot number from the left edge of the display that you want to replace with 57. Less than 1 simply discards the card: 10
+RRRRRRAAAAAAAACKO brian won!!
+```
+
+The game should print the name of the player who won, along with shouting RACKO!.
+
+## Data Structures:
+
+A primary goal of this course is not to only gain familiarity in programming, but also in utilizing various data structures. Therefore, we are putting some constraints on the various implementations of components that will be acceptable. 
+
+In this program, both your decks and your hands will rely on Card objects. In terms of this project, Cards are actually doubly-linked nodes with both previous and next pointers to other Cards. You will use these Card nodes in both your hand and stack classes to create collections of Cards. In other words, both your deck and hand classes can be viewed as doubly-linked lists that provide only the necessary methods for the game. Usage of arrays are prohibited, except for a temporary array to hold hands while Cards are being dealt. 
 
 ### Sample run of program
 
-Takes a second or so to start. You can ignore the cd command.
+Below is an example of how your program should run.
 
-![Sample execution of program](demo.gif)
+![Sample execution of program]()
 
 ## Code Organization:
 
@@ -129,108 +167,21 @@ You will need to make sure that your code meets the following specifications.
 Note that there is some room for interpretation, but a general code outline is given below.
  
 ### The Main File
-The main file shall create a Game instance and utilize its methods to implement the game.
-Additionally, the main file will handle user selections and input. 
-
-### The Passage Class
-![UML of Passage class](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLWW04edfgGhLNBgPnVu5gNbM2adv-JbSkjcfbLOAnIKfLbR59KMPUUbSsb2b6fe89aYf0aGVTb4TP2CKW6PgSd5fUuAbD3GLe7Pf1wKMbcOMfHPxfrOYYRgdba0bKg0Io8O1pO6RKfQVcS9Lo-MGcfS2z1a0)
-
-This class is responsible for storing information on a passage in the maze. A passage can either be a solid wall, an open passageway, or a door. The first parameterized constructor can be used to create a passage that is not a door. The second takes in an additional key parameter for a door.
-In addition to the parameterized constructors, this class should have the following methods:
-* `IsOpen ()`
-	* Returns a boolean value to state whether the passage is currently open.
-* `RequiresKey ()`
-	* Returns a boolean (true or false) if the passage requires a key to open.
-	* This function allows you to determine whether the passage is a door.
-* `GetRequiredKey ()`
-	* Returns an std::string of the key needed to open the door. For instance a "red_key" is needed to open the door that is South of The Start
-* `Open ()`
-	* Opens a closed door. You should check that the player has the required key before opening the door.
-   
-
-### The Room Class
-![UML of Room class](http://www.plantuml.com/plantuml/png/VP71YeCm48RlynGvwhg-W2oBUrYMlKXf3pq7CzY0CJGpiONITs_IYYXLJmxpVn_EhoMnTEnD2tKhYSJUMYDka7VIO268LL4GEzqra6j6GyEknvgj-vhatn0aw_YqaqIo2V8mV42EadXXJTOluXTSmY6BjoNfy9oyMiHZFqToUmh-7t8LZ2GLyuRY5KrAH6Gqd-blgB8Q7gpVK8-ueaBsezG_uxnK_DmHwwrMWQZFNZkiyCgHVBlz3YLsAlp71m00)
-
-This class holds information for a Room in the maze. Each Room object is composed of four passages pointers (one for each direction), a name, and the list of items in that Room. 
-In addition to the parameterized constructor, this class should have the following methods:
-* `GetName ()`
-	* Returns the name of the Room.
-* `GetNorthPassage ()`, `GetEastPassage ()`, `GetSouthPassage ()`, `GetWestPassage ()`
-	* Each of these methods returns a pointer to the corresponding Passage.
-   * This allows for calls such as "someRoom->GetNorthPassage()->Open()"
-* `AddItem (std::string item)`
-	* Adds an item to the items vector of the Room object.
-* `AcquireNextItem ()`
-	* When a player enters a room, they should receive all items in that room. AcquireNextItem returns one item at a time and removes it from the Room.
-   
-### The Maze Class
-![UML of Maze class](http://www.plantuml.com/plantuml/png/LOx1JiCm38RlVWeVqvQyG4wLAi454EeRXCPKaP869Iu8fktPvtITgfrY-_zYVtrXctcD0QPWIy4t-qzu0frJYiNWA4_RrlPNEhymw2c5lGGTXNxsWGmMTiRuhyAPR9JaDLbNTwd6u4_o3lGW2TE77B4pgOqNsYypyjyt2RP7BK0dFn-H-w46kXVYQgN404Nh2MiXKWtkkXloliPFogDegnfKtMCyf72CeRlSHE4CFIrkZU4A)
-
-This class holds the information for the Maze. The Maze is a two-dimensional array of Rooms represented by a Room**. You will need to read the information for the Maze from an input file, assemble the information into Room objects, and add them to the array.    
-In addition to the parameterized constructor and a destructor, this class should have the following methods:
-* `LoadMaze ()`
-	* This private helper function is used to read the file and create the two-dimensional array of Room objects.
-* `CreatePassage()`
-	* This private helper function takes in a string of '-', '+', or an item need to open a door, and returns a pointer to an appropriate Passage object.
-* `GetRoom (int row, int col)`
-	* Takes in a position in terms of a row and col and returns a pointer to the Room object at that location in the Maze.
-* `GetNumberRows ()`, `GetNumberCols ()`
-   * Simple getter methods that return the number of rows and columns in the maze.
-   
-### The Player Class
-![UML of Player class](http://www.plantuml.com/plantuml/png/VP31IWGn44Jl_HKvPXdd1mQHbJte7eH5yGDYqaWWIKEwDuk8_svd8pDUzFOggLGLsREuAkUSm2V7R4x9VM0rdp1NkYmc5e7PK_gXJ0rvCCnHCAjW2SlIq0lLsokpr5ZUxm2c4MPtYWyeptInEpDUTtsWjEaNb1Dnb4Z5we7HzXlJGSkxgL4C6dCVmb5hxQyYqtUibkdHyP-EDw84qolZlnbZxHCrFD2voBRnM7p5ZELwntRrVy4UIz0__0O0)
-
-This class holds the information for the Player. As the player moves through the maze, you must keep track of the player's location, any items that they pick up along the way, and the number of moves that they have made. This class should have the following methods:
-* `GetRow ()`, `GetCol ()`
-	* Simple getter methods that return the player's current row and column in the maze.
-* `SetPosition(int row, int col)`
-	* A setter method that updates the player's row and column.
-* `AddItem (std::string item)`
-	* Add an item to the current collection of items that the player has.
-* `HasItem (std::string item)`
-	* Returns a boolean value that says whether the player has obtained a given item. Should return true if the item is in the player's collection of obtained items and false otherwise. 
-* `UseItem (std::string item)`
-   * Items are consumables, which means that when they are used, they should be removed completely from the player. 
-* `GetMoveCount ()`
-   * Returns the number of moves the player has made in the maze.
-* `IncrementMoves ()`
-   * Every time the player makes a move, this function should be used to increase the number of moves the player has made by 1.
-   
-### The Game Class
-![UML of Game class](http://www.plantuml.com/plantuml/png/XOxFQiCm38VlVWeTqsPv0JD6OTd2O1rbXzqzMnI3RHLB2Vl3tdsnITkmoowo-IJzzErOJ9On1cM3OOR1H8HlrKNpXHhsSzsgxXJC9sODX_hEm8uvOv9NegYXr2jx4eoiWSLfFQ4LohVrpv9zEjufrGqe1yDiZjWZs-nFuYar2zfkGCDgGQcsA3NLvEPii9bnxxburNjDsPh8kmjUujQT0UN-wlrIKlyUQv-9QdUrzcQ2TxtFQAldQXpScPRfTwAWsZrD-F_m4ltmuUMHnkIQIy2Fsc5oOmo_)
-
-This class holds the primary logic for the game. It takes in a Maze and a Player objects and allows the player to manipulate the Maze according to the rules of the game. In addition to a parameterized constructor, the class should also have the following methods:
-* `GetPassageDescription (Passage* passage)`
-	* This helper function returns a string that describes the given Passage. Descriptions include whether it is a solid wall, open passage, or doorway requiring a key. Look at the example console output in this project description to see the types of information that should be returned.
-* `DisplayItems ()`
-	* Prints all the current items in the room according to this project description.
-* `DisplayPassages ()`
-	* Prints all details about the passages connected to this room according to the project description.
-* `GetCurrentRoomName ()`
-	* Returns the name of the room that the player is currently in.
-* `LootRoom ()`
-	* When the player enters a new room, they should loot it. This means removing all items from the Room object and adding them to the Player object. 
-* `ValidDirection (std::string direction)`
-   * Returns a boolean for whether the player can travel in a specific direction of 'N', 'E', 'S', or 'W'. 
-* `MoveDirection (std::string direction)`
-   * Moves a player in a legal direction. This should update the player's position and also the current Room.
-* `ExitFound ()`
-   * Returns a boolean for whether the player has reached a room with an exit.   
+The main file shall handle setting up the player and the game and repeatedly call DoNextTurn until the game is over and complete. 
 
 ## Additional Requirements:
 
 Your application must function as described below:
 
-1. Your program must adhere to the class diagrams provided in this description, including the use of a two-dimensional array to store the rooms of the maze.
-2. You program must adhere to using the given interface as specified and the given file format.
-3. Any passageway that allows an exit beyond the bounds of the array is considered an exit. Note that you do not want to actually move the player outside the bounds of your array as that may cause your program to crash before it properly exits.
-4. When using an item to pass though a door, the two rooms adjacent to the doorway should both be updated to know that the doorway is now open. Thus, a user can go back and forth through a red_key doorway as many times as they want once they have used the red_key on that door.
+1. Your program must adhere to the class diagrams provided in this description.
+2. You program must adhere to using the given interface as specified.
+3. You must implement your hand and deck classes to be linked lists, using any other data structure for these purposes will result in your project being graded as if it does not compile.
 
 ## Important Notes:
 
 - Projects will be graded on whether they correctly solve the problem, and whether they adhere to good programming practices.
 - Projects must be received by the time specified on the due date. Projects received after that time will get a grade of zero.
-- Do not change the TestCase.cpp, testMaze.txt, or keyboard_input.txt files unless told to! The results you get will be pointless as they will not align with our grading! You can change maze.txt all you want.
+- Do not change the test files unless told to! The results you get will be pointless as they will not align with our grading! You can change maze.txt all you want.
 - Please review the academic honesty policy.
   - Note that viewing another student's solution, whether in whole or in part, is considered academic dishonesty.
   - Also note that submitting code obtained through the Internet or other sources, whether in whole or in part, is considered academic dishonesty. \* All programs submitted will be reviewed for evidence of academic dishonesty, and all violations will be handled accordingly.
