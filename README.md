@@ -149,17 +149,17 @@ RRRRRRAAAAAAAACKO brian won!!
 
 The game should print the name of the player who won, along with shouting RACKO!.
 
-## Data Structures:
-
-A primary goal of this course is not to only gain familiarity in programming, but also in utilizing various data structures. Therefore, we are putting some constraints on the various implementations of components that will be acceptable. 
-
-In this program, both your decks and your hands will rely on Card objects. In terms of this project, Cards are actually doubly-linked nodes with both previous and next pointers to other Cards. You will use these Card nodes in both your hand and stack classes to create collections of Cards. In other words, both your deck and hand classes can be viewed as doubly-linked lists that provide only the necessary methods for the game. Usage of arrays are prohibited, except for a temporary array to hold hands while Cards are being dealt. 
-
 ### Sample run of program
 
 Below is an example of how your program should run.
 
 ![Sample execution of program]()
+
+## Data Structures:
+
+A primary goal of this course is not to only gain familiarity in programming, but also in utilizing various data structures. Therefore, we are putting some constraints on the various implementations of components that will be acceptable. 
+
+In this program, both your decks and your hands will rely on Card objects. In terms of this project, Cards are actually doubly-linked nodes with both previous and next pointers to other Cards. You will use these Card nodes in both your hand and stack classes to create collections of Cards. In other words, both your deck and hand classes can be viewed as doubly-linked lists that provide only the necessary methods for the game. Usage of arrays are prohibited, except for a temporary array to hold hands while Cards are being dealt. 
 
 ## Code Organization:
 
