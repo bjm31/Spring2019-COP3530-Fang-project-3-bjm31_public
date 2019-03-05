@@ -159,7 +159,9 @@ Below is an example of how your program should run.
 
 A primary goal of this course is not to only gain familiarity in programming, but also in utilizing various data structures. Therefore, we are putting some constraints on the various implementations of components that will be acceptable. 
 
-In this program, both your decks and your hands will rely on Card objects. In terms of this project, Cards are actually doubly-linked nodes with both previous and next pointers to other Cards. You will use these Card nodes in both your hand and stack classes to create collections of Cards. In other words, both your deck and hand classes can be viewed as doubly-linked lists that provide only the necessary methods for the game. Usage of arrays are prohibited, except for a temporary array to hold hands while Cards are being dealt. 
+In this program, both your decks and your hands will rely on Card objects. In terms of this project, Cards are actually doubly-linked nodes with both previous and next pointers to other Cards. You will use these Card nodes in both your hand and stack classes to create collections of Cards. In other words, both your deck and hand classes can be viewed as doubly-linked lists that provide only the necessary methods for the game. Usage of arrays are prohibited, except for a temporary array to hold hands while Cards are being dealt.
+
+Note, be careful with your pointers. You must keep them updated as things are being added and removed. 
 
 ## Code Organization:
 
@@ -176,6 +178,10 @@ Your application must function as described below:
 1. Your program must adhere to the class diagrams provided in this description.
 2. You program must adhere to using the given interface as specified.
 3. You must implement your hand and deck classes to be linked lists, using any other data structure for these purposes will result in your project being graded as if it does not compile.
+
+## Extra Credit Opportunity (10 points)
+
+An extra credit opportunity is given for the computer player. Extra credit is given if your computer players can play a game to completion against one another (with random starting racks). To get this extra credit, you cannot hard code the computer player's choices. 
 
 ## Important Notes:
 
