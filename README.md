@@ -22,6 +22,7 @@ To complete this project, you need to make sure that you have read the following
 
 - Chapter 3 - Strings
 - Chapter 4 - Array and Vector Basics
+- Chapter 5 - Function Basics
 - Chapter 7 - Objects and Classes Basics
 - Chapter 9 - Modular Design and Makefiles
 - Chapter 10 - Memory Management
@@ -54,7 +55,7 @@ Enter player number 1's name: brian
 Is this a computer? Enter 1 for yes, 0 for no: 0
 ```
 
-After the information is entered, it shows the hand for the first player. If the player is the first human player in the round, then it should print the round number. Either way, it should print the current player's turn, the player's hand\rack, the top of the discard pile, and the options to pull from the discard pile or the top of the deck. A rack is arranged from the slot 1 at the top to slot 10 at the bottom. Each number should be moved over the number of spaces represented by the card. This means that the 38 has been spaced over 38 spaces from the left hand side. You should note that 10 has an extra digit from other numbers so to account for the 0, lines with other numbers should have an additional space. 
+After the information is entered, it shows the hand for the first player. If the player is the first human player in the round, then it should print the round number. Either way, it should print the current player's turn, the player's hand\rack, the top of the discard pile, and the options to pull from the discard pile or the top of the deck. A rack is arranged from the slot 1 at the top to slot 10 at the bottom. Each number should be moved over the number of spaces represented by the card. This means that the 38 has been spaced over 38 spaces from the left hand side. 
 
 ```
 ###########################################################################
@@ -171,6 +172,116 @@ Note that there is some room for interpretation, but a general code outline is g
 ### The Main File
 The main file shall handle setting up the player and the game and repeatedly call DoNextTurn until the game is over and complete. 
 
+### The Card Class
+![UML of Card class](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLd1EB4gfvjBDp2jHA4lCAKtbqWM9Q2aK5AMMmTXvgHKbNDeWjWPSdOu2GXsG3LUdoQKTd5hY1sHf80agM2cKvMUcWEK2W3eq49eHSkwf9M4WepL0Ga2BW28Gay02O1r08QW12A5QBeVKl1IWZm00)
+
+This class is responsible for storing information on a card for the game. A Card is a doubly-linked node with both a previous and next pointer to other Cards. Note that in the test, the constructor is called with different numbers of arguments.  This is because both prev and next have default parameter values of nullptr (read 5.9 in the book).
+In addition to the parameterized constructors, this class should have methods for accessing and setting its fields.
+
+### The Deck Class
+![UML of Deck class](http://www.plantuml.com/plantuml/png/JP31QiGW48RlynGUqzgyG4-RwYw4PJSbIyzYTSA6TKrnD2sKldirWJO7HUV__s-6sL7K8QQx0-Cq4PDeRjzG2nti8ulJ1zHcyXJPw2CxlvrUzhtg3aeqlRoezgpwHXmx9VVY27Mn-7H_nz0D9K-jBpJWvQuUW9_q3G_9kVNFdjayZHRuQw9hLSApTWd_wt8aap7LEajvRhIWFnV48cO6uehC7E2NQne6XviUhISCiOaRs5FnvcFnwy_t0plqDc_Z5m00)
+
+This class is responsible for holding decks of cards in the Racko game. We will have separate decks for the discard pile and the draw pile. For most purposes, a Deck is a stack linked together by Cards with the one caveat that you can also insert into any position. This class should have the following additional methods:  
+
+* `MakeFullDeck ()`
+	* Creates a starting Racko deck of all 60 cards.
+* `Push ()`
+	* Creates a new Card from the passed in value and puts it on top of the Deck.
+* `Discard ()`
+	* Similar to Push but takes in a Card* instead of making a new Card.
+* `Draw ()`
+	* Removes the Card from the top of the Deck and returns it.
+* `Peek ()`
+ * Returns the value of the Card on top of the Deck without removing the Card.
+* `Shuffle ()`
+ * Rearranges the Cards in the Deck. You can choose how the Deck gets rearranged. 
+* `InsertAt ()`
+ * Inserts a Card at the given position, starting from 0.
+ 
+### The Deck Class
+![UML of Deck class](http://www.plantuml.com/plantuml/png/JP31QiGW48RlynGUqzgyG4-RwYw4PJSbIyzYTSA6TKrnD2sKldirWJO7HUV__s-6sL7K8QQx0-Cq4PDeRjzG2nti8ulJ1zHcyXJPw2CxlvrUzhtg3aeqlRoezgpwHXmx9VVY27Mn-7H_nz0D9K-jBpJWvQuUW9_q3G_9kVNFdjayZHRuQw9hLSApTWd_wt8aap7LEajvRhIWFnV48cO6uehC7E2NQne6XviUhISCiOaRs5FnvcFnwy_t0plqDc_Z5m00)
+
+This class is responsible for holding decks of cards in the Racko game. We will have separate decks for the discard pile and the draw pile. For most purposes, a Deck is a stack linked together by Cards with the one caveat that you can also insert into any position. This class should have the following additional methods:  
+
+* `MakeFullDeck ()`
+	* Creates a starting Racko deck of all 60 cards.
+* `Push ()`
+	* Creates a new Card from the passed in value and puts it on top of the Deck.
+* `Discard ()`
+	* Similar to Push but takes in a Card* instead of making a new Card.
+* `Draw ()`
+	* Removes the Card from the top of the Deck and returns it.
+* `Peek ()`
+ * Returns the value of the Card on top of the Deck without removing the Card.
+* `Shuffle ()`
+ * Rearranges the Cards in the Deck. You can choose how the Deck gets rearranged. 
+* `InsertAt ()`
+ * Inserts a Card at the given position, starting from 0.
+
+### The Hand Class
+![UML of Hand class](http://www.plantuml.com/plantuml/png/JOz13i9024Ntd6AMhQCNwAh6XIvCJAmNmDBen75e2hKBuzqjOw9k2Fp_UO5Q50STxn7QY29kXucUiDhWG0iNUUf4hGTlHb62NnETE0-VJ3lNqbNkmM5EDHFsXz5M_lsb2qbTpn8qSB9qzWmgHsnlN9XsPexWcojFXi-IA5MLw13I1Vosq_tteE97UK7T9PfVU0C0)
+
+This class is responsible for holding hands of cards for the players in the Racko game. The Hand of Cards is a form of limited linked list where the card in slot 1 (lowestCard) is the head. This class should have the following additional methods:  
+
+* `AddToHand ()`
+	* Used when Cards are being dealt to the player. Each time a Card is added to the hand, it will become the new head. 
+* `SwapOutCard ()`
+	* Exchanges the Card at the specified slot and returns the original Card for discard.
+* `HasRacko ()`
+	* Checks the Hand to determine whether it has reached Racko (won the game).
+* `ShowHand ()`
+	* Displays the current Hand to the console.
+ 
+### The Hand Class
+![UML of Hand class](http://www.plantuml.com/plantuml/png/JOz13i9024Ntd6AMhQCNwAh6XIvCJAmNmDBen75e2hKBuzqjOw9k2Fp_UO5Q50STxn7QY29kXucUiDhWG0iNUUf4hGTlHb62NnETE0-VJ3lNqbNkmM5EDHFsXz5M_lsb2qbTpn8qSB9qzWmgHsnlN9XsPexWcojFXi-IA5MLw13I1Vosq_tteE97UK7T9PfVU0C0)
+
+This class is responsible for holding hands of cards for the players in the Racko game. The Hand of Cards is a form of limited linked list where the card in slot 1 (lowestCard) is the head. This class should have the following additional methods:  
+
+* `AddToHand ()`
+	* Used when Cards are being dealt to the player. Each time a Card is added to the hand, it will become the new head. 
+* `SwapOutCard ()`
+	* Exchanges the Card at the specified slot and returns the original Card for discard. Slots range from 1 to 10.
+* `HasRacko ()`
+	* Checks the Hand to determine whether it has reached Racko (won the game).
+* `ShowHand ()`
+	* Creates a string that is the output to display for the ten slots with cards and appropriate spaces, then returns it. 
+ 
+ ### The Player Class
+![UML of Player class](http://www.plantuml.com/plantuml/png/PP71JiCm38RlUGeVCzQ-G4-JUc0SO1D3t4qJqMXfN2Kk4qAyEt4cIbalLcNx-tvNsIN6oDFWLUSn9JXw_BJnIzM9JTCaZYwymrYQJpXOLUyn6EXpKVKRaGUNMXh6YMrKsokiD_FNKX8oNi6CLt23P-faMK9Ms0OQ-21doeOOzApvDtgOPVfMFg-zJ34SOswpbkOYAYjwkXJzUdB1yJ1nYz5eANVGvLg12mmZ9SUEWa1bfhPxJC_OdQc8v1IrlR_-srgzEFfl-n7Fjkt9TLPBX759yWwZvAmCltm6ADcJ9owG4A_e9ok0DDItsjbWycF_0000)
+
+This class is responsible for maintaining the players which can be either human or computer. In addition to the specified getters, setters, and constructors in the diagram, this class should have the following additional methods:  
+
+* `TurnPrompt ()`
+	* Returns a string saying whose turn it is currently. 
+* `ShowHand ()`
+	* Calls the player's hand's ShowHand method and returns the resulting string.
+* `SwapOutCard ()`
+	* Calls the player's hand's SwapOutCard method.
+* `HasRacko ()`
+	* Calls the player's hand's HasRacko method.
+* `MakeChoice ()`
+	* Passes the value of the top of the discard pile to the computer player for it to make a selection of whether to use the discard pile "p" or to draw from the draw pile "d".
+* `ComputerChooseSlot ()`
+	* Pass a card's value to the computer for it to choose whether to add a Card into its hand. If it finds a suitable position, it will return the slot number for where to swap in the Card. Otherwise, it will return -1.
+ 
+### The Game Class
+![UML of Game class](http://www.plantuml.com/plantuml/png/VL3DIiGm4BxFK-JOMle2HMJ1edZP5jqNo2QpM4mpooJfAkAxEqbMq8kNPFBb-_cONOYQOreT6AT3K8zwnK_eGxJ3iA69nBUpqn_8T-fSxW3zugFoQJqYJwVvDsWIC_fOiKDY_mT-fkGjz2EQDsNb-1cNO3HRw79qyqzm2zr8UtoFsRbfrQ0sMaJt5B9osf0BU2HoOeRN6arkK1tsfNFcrAyRw5vUwNAWytGQQujvSLXSH2Lnh2yFJ6lkMT1xeOZgIcxAK-MnXI_OeRUoo6y0)
+
+This class contains the primary logic of the Game. The constructor of this class will handle creating the deck, and dealing cards to hands for the players. This class should have the following additional methods:  
+
+* `DoNextTurn ()`
+	* Handles the primary logic for the next player's turn. If the player is human, it prompts for the player's choices. Otherwise it calls the methods for the computer to make a choice.  
+* `IsGameOver ()`
+	* Returns whether the current player has a Racko.
+* `GetPlayer ()`
+	* Returns the specified player. 
+* `ShowTopOfDiscardPile ()`
+	* Peeks at the card on the discard pile and returns its value.
+* `DrawFromDeck ()`
+	* Draws the next card from the draw deck. If the deck is empty, all cards in the discard pile should be put in the draw pile and the draw pile should be shuffled. The top card on the draw pile is then made into the new discard pile.  
+* `Discard ()`
+	* Discards a card to the discard deck. 
+
 ## Additional Requirements:
 
 Your application must function as described below:
@@ -178,6 +289,8 @@ Your application must function as described below:
 1. Your program must adhere to the class diagrams provided in this description.
 2. You program must adhere to using the given interface as specified.
 3. You must implement your hand and deck classes to be linked lists, using any other data structure for these purposes will result in your project being graded as if it does not compile.
+
+Note - Be Careful With Your Pointers!
 
 ## Extra Credit Opportunity (10 points)
 
