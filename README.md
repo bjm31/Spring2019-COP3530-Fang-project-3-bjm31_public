@@ -177,26 +177,6 @@ The main file shall handle setting up the player and the game and repeatedly cal
 
 This class is responsible for storing information on a card for the game. A Card is a doubly-linked node with both a previous and next pointer to other Cards. Note that in the test, the constructor is called with different numbers of arguments.  This is because both prev and next have default parameter values of nullptr (read 5.9 in the book).
 In addition to the parameterized constructors, this class should have methods for accessing and setting its fields.
-
-### The Deck Class
-![UML of Deck class](http://www.plantuml.com/plantuml/png/JP31QiGW48RlynGUqzgyG4-RwYw4PJSbIyzYTSA6TKrnD2sKldirWJO7HUV__s-6sL7K8QQx0-Cq4PDeRjzG2nti8ulJ1zHcyXJPw2CxlvrUzhtg3aeqlRoezgpwHXmx9VVY27Mn-7H_nz0D9K-jBpJWvQuUW9_q3G_9kVNFdjayZHRuQw9hLSApTWd_wt8aap7LEajvRhIWFnV48cO6uehC7E2NQne6XviUhISCiOaRs5FnvcFnwy_t0plqDc_Z5m00)
-
-This class is responsible for holding decks of cards in the Racko game. We will have separate decks for the discard pile and the draw pile. For most purposes, a Deck is a stack linked together by Cards with the one caveat that you can also insert into any position. This class should have the following additional methods:  
-
-* `MakeFullDeck ()`
-	* Creates a starting Racko deck of all 60 cards.
-* `Push ()`
-	* Creates a new Card from the passed in value and puts it on top of the Deck.
-* `Discard ()`
-	* Similar to Push but takes in a Card* instead of making a new Card.
-* `Draw ()`
-	* Removes the Card from the top of the Deck and returns it.
-* `Peek ()`
- * Returns the value of the Card on top of the Deck without removing the Card.
-* `Shuffle ()`
- * Rearranges the Cards in the Deck. You can choose how the Deck gets rearranged. 
-* `InsertAt ()`
- * Inserts a Card at the given position, starting from 0.
  
 ### The Deck Class
 ![UML of Deck class](http://www.plantuml.com/plantuml/png/JP31QiGW48RlynGUqzgyG4-RwYw4PJSbIyzYTSA6TKrnD2sKldirWJO7HUV__s-6sL7K8QQx0-Cq4PDeRjzG2nti8ulJ1zHcyXJPw2CxlvrUzhtg3aeqlRoezgpwHXmx9VVY27Mn-7H_nz0D9K-jBpJWvQuUW9_q3G_9kVNFdjayZHRuQw9hLSApTWd_wt8aap7LEajvRhIWFnV48cO6uehC7E2NQne6XviUhISCiOaRs5FnvcFnwy_t0plqDc_Z5m00)
@@ -217,20 +197,6 @@ This class is responsible for holding decks of cards in the Racko game. We will 
  * Rearranges the Cards in the Deck. You can choose how the Deck gets rearranged. 
 * `InsertAt ()`
  * Inserts a Card at the given position, starting from 0.
-
-### The Hand Class
-![UML of Hand class](http://www.plantuml.com/plantuml/png/JOz13i9024Ntd6AMhQCNwAh6XIvCJAmNmDBen75e2hKBuzqjOw9k2Fp_UO5Q50STxn7QY29kXucUiDhWG0iNUUf4hGTlHb62NnETE0-VJ3lNqbNkmM5EDHFsXz5M_lsb2qbTpn8qSB9qzWmgHsnlN9XsPexWcojFXi-IA5MLw13I1Vosq_tteE97UK7T9PfVU0C0)
-
-This class is responsible for holding hands of cards for the players in the Racko game. The Hand of Cards is a form of limited linked list where the card in slot 1 (lowestCard) is the head. This class should have the following additional methods:  
-
-* `AddToHand ()`
-	* Used when Cards are being dealt to the player. Each time a Card is added to the hand, it will become the new head. 
-* `SwapOutCard ()`
-	* Exchanges the Card at the specified slot and returns the original Card for discard.
-* `HasRacko ()`
-	* Checks the Hand to determine whether it has reached Racko (won the game).
-* `ShowHand ()`
-	* Displays the current Hand to the console.
  
 ### The Hand Class
 ![UML of Hand class](http://www.plantuml.com/plantuml/png/JOz13i9024Ntd6AMhQCNwAh6XIvCJAmNmDBen75e2hKBuzqjOw9k2Fp_UO5Q50STxn7QY29kXucUiDhWG0iNUUf4hGTlHb62NnETE0-VJ3lNqbNkmM5EDHFsXz5M_lsb2qbTpn8qSB9qzWmgHsnlN9XsPexWcojFXi-IA5MLw13I1Vosq_tteE97UK7T9PfVU0C0)
