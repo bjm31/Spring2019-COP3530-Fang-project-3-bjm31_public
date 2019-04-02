@@ -11,7 +11,7 @@ Player::Player(std::string name, Hand hand, bool isComputer) {
 	
 	this->playerName = name;
 	this->hand = hand;
-	this->IsComputer = isComputer;
+	this->isComputer = isComputer;
 }
 
 void Player::SetName(std::string name) {
