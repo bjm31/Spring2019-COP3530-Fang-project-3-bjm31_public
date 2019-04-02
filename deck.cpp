@@ -23,7 +23,7 @@ void Deck::Push(int value) {
 
 void Deck::Discard(Card* card) {
 
-	this->Push(card->GetValue);
+	this->Push(card->GetValue());
 }
 
 Card* Deck::Draw() {
