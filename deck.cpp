@@ -53,7 +53,7 @@ int Deck::Peek() {
 void Deck::Shuffle() {
 
 	std::srand(std::time(nullptr)); //use current time as seed for random generator
-	int rng = std::rand() % 10 + 12;
+	int rng = std::rand() % 12 + 10;
 
 	std::cout << rng << std::endl;
 
