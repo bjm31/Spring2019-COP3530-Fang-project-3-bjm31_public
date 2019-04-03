@@ -55,7 +55,7 @@ void Deck::Shuffle() {
 	std::srand(std::time(nullptr)); //use current time as seed for random generator
 	int rng = std::rand() % 10 + 12;
 
-	std::cout << rng << endl;
+	std::cout << rng << std::endl;
 
 	for (int i = 0; i < numberOfCardsInDeck / 10; ++i) {
 
