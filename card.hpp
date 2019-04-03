@@ -1,5 +1,5 @@
-
 class Card {
+
 public:
 	Card(int value, Card* prev, Card* next);
 	void SetNext(Card* next);

@@ -1,5 +1,6 @@
 #include"deck.hpp"
 #include"player.hpp"
+#include"card.hpp"
 
 #include<vector>
 

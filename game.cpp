@@ -39,13 +39,16 @@ int Game::ShowTopOfDiscardPile() {
 
 Card* Game::DrawFromDeck() {
 
-	if (this->deck.Draw() == nullptr) {
+	if (this->deck.Peek() == 0) {
 
-		deck = discard;
+		/*move cards from discard pile to deck*/
+		do {
+
+			this->deck.Discard(this->discard.Draw());
+
+		} while (this->discard.Peek() != 0);
 
 		this->deck.Shuffle();
-
-		discard = Deck();
 
 		this->discard.Discard(this->deck.Draw());
 	}

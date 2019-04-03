@@ -1,4 +1,5 @@
 #include"hand.hpp"
+#include"card.hpp"
 
 #include<string>
 
