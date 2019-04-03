@@ -1,3 +1,6 @@
+#ifndef DECK_HPP
+#define DECK_HPP
+
 #include"card.hpp"
 
 #include <cstdlib>
@@ -22,3 +25,5 @@ private:
 	const int NUMBER_OF_CARDS_IN_RACKO_DECK = 60;
 	int numberOfCardsInDeck;
 };
+
+#endif

@@ -1,6 +1,8 @@
+#ifndef GAME_HPP
+#define GAME_HPP
+
 #include"deck.hpp"
 #include"player.hpp"
-#include"card.hpp"
 
 #include<vector>
 
@@ -23,3 +25,5 @@ private:
 	Deck deck;
 	Deck discard;
 };
+
+#endif

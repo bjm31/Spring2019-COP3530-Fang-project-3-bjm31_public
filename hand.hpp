@@ -1,3 +1,6 @@
+#ifndef HAND_HPP
+#define HAND_HPP
+
 #include"card.hpp"
 
 #include<string>
@@ -15,3 +18,5 @@ public:
 private:
 	Card* lowestCard;
 };
+
+#endif

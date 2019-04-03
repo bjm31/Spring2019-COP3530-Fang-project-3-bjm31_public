@@ -1,3 +1,6 @@
+#ifndef CARD_HPP
+#define CARD_HPP
+
 class Card {
 
 public:
@@ -13,3 +16,5 @@ private:
 	Card* prev;
 	Card* next;
 };
+
+#endif

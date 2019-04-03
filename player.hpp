@@ -1,5 +1,7 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include"hand.hpp"
-#include"card.hpp"
 
 #include<string>
 
@@ -25,3 +27,5 @@ private:
 	Hand hand;
 	bool isComputer;
 };
+
+#endif
