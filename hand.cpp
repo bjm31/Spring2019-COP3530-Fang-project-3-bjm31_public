@@ -77,7 +77,7 @@ std::string Hand::ShowHand() {
 
 		temp = temp->GetNext();				//get the next card
 
-	} while (temp->GetValue() != 0);
+	} while (temp->GetValue() != -1);
 
 	return output;
 }

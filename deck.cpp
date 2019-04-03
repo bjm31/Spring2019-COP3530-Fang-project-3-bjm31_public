@@ -3,29 +3,43 @@
 Deck::Deck() {
 
 	this->numberOfCardsInDeck = 0;
-	this->top = new Card(-1); //dummy node at bottom of deck
+	this->top = new Card(); //dummy node at bottom of deck
 }
 
 void Deck::MakeFullDeck() {
 	
-	for (int i = 0; i < NUMBER_OF_CARDS_IN_RACKO_DECK; ++i) {
+	for (int i = 1; i <= NUMBER_OF_CARDS_IN_RACKO_DECK; ++i) {
 
-		this->Push(++numberOfCardsInDeck);
+		this->Push(i);
 	}
 
-	Shuffle();
+	//Shuffle();
 }
 
 void Deck::Push(int value) {
 
-	this->top = new Card(value, nullptr, this->top);
+	if (this->top->GetValue() != -1) {
+		
+		this->top = new Card(value, this->top->GetPrev(), this->top);
+
+		this->top->GetPrev()->SetNext(this->top);
+
+		this->top->GetNext()->SetPrev(this->top);
+	}
+
+	else {
+
+		this->top = new Card(value, this->top, nullptr);
+
+		this->top->GetPrev()->SetNext(this->top);
+	}
+
+	++numberOfCardsInDeck;
 }
 
 void Deck::Discard(Card* card) {
 
 	card->SetNext(this->top);
-	
-	card->SetPrev(nullptr);
 
 	this->top = card;
 	
@@ -36,9 +50,11 @@ Card* Deck::Draw() {
 	
 	Card* temp = this->top;
 	
-	this->top = this->top->GetNext();
+	this->top->GetPrev()->SetNext(this->top->GetNext());
 
-	this->top->SetPrev(nullptr);
+	this->top->GetNext()->SetPrev(this->top->GetPrev());
+
+	this->top = temp->GetNext();
 
 	temp->SetPrev(nullptr);
 	
@@ -62,9 +78,9 @@ void Deck::Shuffle() {
 	
 	do {
 
-		int rng = std::rand() % numberOfCardsInDeck;	//generate a random number between 0 and 59
+		int rng = std::rand() % numberOfCardsInDeck;		//generate a random number between 0 and 59
 
-		this->InsertAt(this->top, rng);					//inserts the top card at the random spot
+		this->InsertAt(this->top, rng);						//inserts the top card at the random spot
 
 		--count;
 
@@ -80,26 +96,23 @@ void Deck::InsertAt(Card* card, int index) {
 		temp = temp->GetNext();
 	}
 	
-	if (card->GetPrev() != nullptr && card->GetNext() != nullptr) {
+	if (card == this->top) {
 
-		if (card == this->top) {
+		this->top->GetNext()->SetPrev(nullptr);
 
-			this->top->GetNext()->SetPrev(nullptr);
-
-			this->top = card->GetNext();
-		}
-
-		else {
-
-			card->GetNext()->SetPrev(card->GetPrev());
-
-			card->GetPrev()->SetNext(card->GetNext());
-		}
-		
-		card->SetNext(temp);
-
-		card->SetPrev(temp->GetPrev());
-		
-		temp->SetPrev(card);
+		this->top = card->GetNext();
 	}
+
+	else {
+
+		card->GetNext()->SetPrev(card->GetPrev());
+
+		card->GetPrev()->SetNext(card->GetNext());
+	}
+		
+	card->SetNext(temp);
+
+	card->SetPrev(temp->GetPrev());
+		
+	temp->SetPrev(card);
 }
