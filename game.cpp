@@ -11,6 +11,7 @@ Game::Game(std::vector<Player> players) {
 	this->currentRound = 0;
 
 	this->deck.MakeFullDeck();
+
 }
 
 void Game::DoNextTurn() {

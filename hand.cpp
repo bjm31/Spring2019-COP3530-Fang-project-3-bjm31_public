@@ -30,7 +30,7 @@ Card* Hand::SwapOutCard(Card* card, int position) {
 
 bool Hand::HasRacko() {
 
-	Card* temp = this->lowestCard;
+	Card* temp = GetLowestCard();
 
 	bool check = true;
 
@@ -57,9 +57,11 @@ std::string Hand::ShowHand() {
 
 	Card* temp = this->lowestCard;
 
-	for (int i = 1; i <= 10; ++i) {
+	int i = 0;
 
-		output += i + ":";
+	do {
+
+		output += std::to_string(++i) + ":";
 
 		/*creates the string of spaces per card position and card value*/
 		for (int j = 0; j < temp->GetValue(); ++j) {
@@ -67,14 +69,15 @@ std::string Hand::ShowHand() {
 			spaces += " ";
 		}
 		
-		output += spaces;					//adds spaces till the value of the card
+		output += spaces;					//adds spaces string to output
 
-		output += temp->GetValue() + "\n";
-
+		output += std::to_string(temp->GetValue()) + "\n";
+		
 		spaces = "";						//reset number of spaces for next pass
 
 		temp = temp->GetNext();				//get the next card
-	}
+
+	} while (temp->GetValue() != 0);
 
 	return output;
 }

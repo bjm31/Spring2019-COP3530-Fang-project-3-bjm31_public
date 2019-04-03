@@ -30,7 +30,6 @@ void Deck::Discard(Card* card) {
 	this->top = card;
 	
 	++numberOfCardsInDeck;
-
 }
 
 Card* Deck::Draw() {
@@ -38,6 +37,7 @@ Card* Deck::Draw() {
 	Card* temp = this->top;
 	
 	this->top = this->top->GetNext();
+
 	this->top->SetPrev(nullptr);
 
 	--numberOfCardsInDeck;
@@ -52,26 +52,51 @@ int Deck::Peek() {
 
 void Deck::Shuffle() {
 
-	std::srand(std::time(nullptr)); //use current time as seed for random generator
-	int rng = std::rand() % 12 + 10;
+	int count = numberOfCardsInDeck * numberOfCardsInDeck;
+	
+	std::srand(std::time(nullptr));			//use current time as seed for random generator
+	
+	do {
 
-	std::cout << rng << std::endl;
+		int rng = std::rand() % numberOfCardsInDeck;
 
-	for (int i = 0; i < numberOfCardsInDeck / 10; ++i) {
+		std::cout << "RNG: " << rng << std::endl;
 
+		this->InsertAt(this->top, rng);
 
+		--count;
 
-	}
+	} while (count != 0);
 }
 
 void Deck::InsertAt(Card* card, int index) {
 
 	Card* temp = this->top;
 
-	for (int i = 1; i <= index; ++i) {
-	
+	for (int i = 0; i < index; ++i) {
+
 		temp = temp->GetNext();
 	}
+	
+	if (card->GetNext() != nullptr && card->GetPrev() != nullptr) {
 
-	temp = card;
+		if (card == this->top) {
+
+			card->GetNext()->SetPrev(nullptr);
+
+			this->top = card->GetNext();
+		}
+
+		else {
+
+			card->GetNext()->SetPrev(card->GetPrev());
+			card->GetPrev()->SetNext(card->GetNext());
+
+		}
+		
+		card->SetNext(temp->GetNext());
+		card->SetPrev(temp->GetPrev());
+		card->GetNext()->SetPrev(card);
+		card->GetPrev()->SetNext(card);	
+	}
 }
