@@ -4,7 +4,7 @@
 class Card {
 
 public:
-	Card(int value, Card* prev, Card* next);
+	Card(int value, Card* prev = nullptr, Card* next = nullptr);
 	void SetNext(Card* next);
 	void SetPrev(Card* prev);
 	int GetValue();
