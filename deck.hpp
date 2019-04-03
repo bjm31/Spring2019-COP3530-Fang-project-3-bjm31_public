@@ -1,8 +1,12 @@
 #include"card.hpp"
 
-#include<cstdlib>
+#include <cstdlib>
+#include <ctime>
 
-class Deck{
+#include<iostream>
+
+class Deck {
+
 public:
 	Deck();
 	void MakeFullDeck();
