@@ -13,7 +13,7 @@ void Deck::MakeFullDeck() {
 		this->Push(++numberOfCardsInDeck);
 	}
 
-	this->Shuffle();
+	Shuffle();
 }
 
 void Deck::Push(int value) {
@@ -52,17 +52,15 @@ int Deck::Peek() {
 
 void Deck::Shuffle() {
 
-	int count = numberOfCardsInDeck * numberOfCardsInDeck;
+	int count = numberOfCardsInDeck * numberOfCardsInDeck;	//number of random insertions
 	
-	std::srand(std::time(nullptr));			//use current time as seed for random generator
+	std::srand(std::time(nullptr));							//use current time as seed for random generator
 	
 	do {
 
-		int rng = std::rand() % numberOfCardsInDeck;
+		int rng = std::rand() % numberOfCardsInDeck;	//generate a random number between 0 and 59
 
-		std::cout << "RNG: " << rng << std::endl;
-
-		this->InsertAt(this->top, rng);
+		this->InsertAt(this->top, rng);					//inserts the top card at the random spot
 
 		--count;
 
@@ -78,11 +76,11 @@ void Deck::InsertAt(Card* card, int index) {
 		temp = temp->GetNext();
 	}
 	
-	if (card->GetNext() != nullptr && card->GetPrev() != nullptr) {
+	if (card->GetPrev() != nullptr && card->GetNext() != nullptr) {
 
 		if (card == this->top) {
 
-			card->GetNext()->SetPrev(nullptr);
+			this->top->GetNext()->SetPrev(nullptr);
 
 			this->top = card->GetNext();
 		}
@@ -90,13 +88,14 @@ void Deck::InsertAt(Card* card, int index) {
 		else {
 
 			card->GetNext()->SetPrev(card->GetPrev());
-			card->GetPrev()->SetNext(card->GetNext());
 
+			card->GetPrev()->SetNext(card->GetNext());
 		}
 		
-		card->SetNext(temp->GetNext());
+		card->SetNext(temp);
+
 		card->SetPrev(temp->GetPrev());
-		card->GetNext()->SetPrev(card);
-		card->GetPrev()->SetNext(card);	
+		
+		temp->SetPrev(card);
 	}
 }

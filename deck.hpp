@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include<iostream>
-
 class Deck {
 
 public:

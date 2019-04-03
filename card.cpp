@@ -1,6 +1,6 @@
 #include"card.hpp"
 
-Card::Card(int value, Card* prev, Card* next) {
+Card::Card(int value, Card* prev = nullptr, Card* next = nullptr) {
 	
 	this->value = value;
 	this->prev = prev;
