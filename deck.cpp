@@ -3,7 +3,7 @@
 Deck::Deck() {
 
 	this->numberOfCardsInDeck = 0;
-	this->top = new Card(0, nullptr, nullptr); //dummy node at bottom of deck
+	this->top = new Card(-1); //dummy node at bottom of deck
 }
 
 void Deck::MakeFullDeck() {
@@ -39,6 +39,10 @@ Card* Deck::Draw() {
 	this->top = this->top->GetNext();
 
 	this->top->SetPrev(nullptr);
+
+	temp->SetPrev(nullptr);
+	
+	temp->SetNext(nullptr);
 
 	--numberOfCardsInDeck;
 

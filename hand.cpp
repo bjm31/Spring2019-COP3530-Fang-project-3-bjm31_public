@@ -2,7 +2,7 @@
 
 Hand::Hand() {
 
-	this->lowestCard = new Card(0, nullptr, nullptr); //dummy node
+	this->lowestCard = new Card(); //dummy node
 }
 
 void Hand::AddToHand(Card* card) {

@@ -9,7 +9,7 @@ class Player {
 
 public:
 	Player();
-	Player(std::string name, Hand hand, bool isComputer);
+	Player(std::string name, Hand hand = Hand(), bool isComputer = false);
 	void SetName(std::string name);
 	void SetHand(Hand hand);
 	void SetIsComputer(bool isComputer);
