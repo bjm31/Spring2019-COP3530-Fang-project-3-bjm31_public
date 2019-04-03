@@ -2,9 +2,9 @@
 
 Card::Card(int value, Card* prev = nullptr, Card* next = nullptr) {
 	
-	this->value = value;
-	this->prev = prev;
-	this->next = next;
+	SetValue(value);
+	SetPrev(prev);
+	SetNext(next);
 }
 
 void Card::SetNext(Card* next) {
