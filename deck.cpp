@@ -80,17 +80,19 @@ int Deck::Peek() {
 	return this->top->GetValue();
 }
 
+/*
+Shuffle works in that it swaps the top card and a 
+random card as many times as the number of cards squared.
+*/
 void Deck::Shuffle() {
 
-	int count = numberOfCardsInDeck * numberOfCardsInDeck;	//number of random insertions
+	int count = numberOfCardsInDeck * numberOfCardsInDeck;	//number of random swaps
 	
 	std::srand(std::time(nullptr));							//use current time as seed for random generator
 	
 	do {
 
-		int rng = std::rand() % numberOfCardsInDeck;		//generate a random number between 0 and 59
-
-		//this->InsertAt(this->top, rng);					//inserts the top card at the random spot
+		int rng = std::rand() % numberOfCardsInDeck + 1; //generate a random number between 1 and number of cards in the deck
 		
 		Card* swap = this->top;
 
@@ -99,9 +101,14 @@ void Deck::Shuffle() {
 			swap = swap->GetNext();
 		}
 
-		Card* temp1 = this->top->GetPrev();
+		if (rng == numberOfCardsInDeck) {
 
-		Card* temp2 = this->top->GetNext();
+
+		}
+
+		Card* topPrev = this->top->GetPrev();
+
+		Card* topNext = this->top->GetNext();
 
 		this->top->GetPrev()->SetNext(swap);
 		
@@ -113,9 +120,9 @@ void Deck::Shuffle() {
 		
 		swap->GetNext()->SetPrev(this->top);
 
-		swap->SetPrev(temp1);
+		swap->SetPrev(topPrev);
 
-		swap->SetNext(temp2);
+		swap->SetNext(topNext);
 
 		this->top = swap;
 
