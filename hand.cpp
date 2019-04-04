@@ -66,17 +66,6 @@ Card* Hand::SwapOutCard(Card* card, int position) {
 	}
 
 	return swap;
-	
-	/*
-	Card* temp = this->lowestCard;
-
-	for (int i = 2; i <= position; ++i) {
-
-		temp = temp->GetNext();
-	} 
-
-	return temp;
-	*/
 }
 
 bool Hand::HasRacko() {
@@ -128,7 +117,7 @@ std::string Hand::ShowHand() {
 
 		temp = temp->GetNext();				//get the next card
 
-	} while (temp->GetValue() != -1);
+	} while (temp != nullptr);
 
 	return output;
 }
