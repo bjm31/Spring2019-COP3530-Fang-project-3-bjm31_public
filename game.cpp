@@ -23,7 +23,9 @@ void Game::DoNextTurn() {
 
 bool Game::IsGameOver() {
 
-	return false;
+	//Returns whether the current player has a Racko.
+
+	return this->players.at(currentPlayerTurn - 1).HasRacko();
 }
 
 Player* Game::GetPlayer(int playerNumber) {
@@ -47,7 +49,7 @@ Card* Game::DrawFromDeck() {
 
 		} while (this->discard.Peek() != 0);
 
-		this->deck.Shuffle();
+		//this->deck.Shuffle();
 
 		this->discard.Discard(this->deck.Draw());
 	}
