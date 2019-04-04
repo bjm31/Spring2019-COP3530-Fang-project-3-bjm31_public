@@ -1,9 +1,11 @@
 #include"deck.hpp"
 
+#include<iostream>
+
 Deck::Deck() {
 
 	this->numberOfCardsInDeck = 0;
-	this->top = new Card(); //dummy node at bottom of deck
+	this->top = new Card(); //dummy node
 }
 
 void Deck::MakeFullDeck() {
@@ -47,15 +49,23 @@ void Deck::Discard(Card* card) {
 }
 
 Card* Deck::Draw() {
-	
+
 	Card* temp = this->top;
 	
-	this->top->GetPrev()->SetNext(this->top->GetNext());
+	if (numberOfCardsInDeck == 0) {
 
-	this->top->GetNext()->SetPrev(this->top->GetPrev());
+		return nullptr;
+	}
+	
+	else if (numberOfCardsInDeck > 1) {
+
+		this->top->GetPrev()->SetNext(this->top->GetNext());
+
+		this->top->GetNext()->SetPrev(this->top->GetPrev());
+	}
 
 	this->top = temp->GetNext();
-
+	
 	temp->SetPrev(nullptr);
 	
 	temp->SetNext(nullptr);
@@ -80,7 +90,34 @@ void Deck::Shuffle() {
 
 		int rng = std::rand() % numberOfCardsInDeck;		//generate a random number between 0 and 59
 
-		this->InsertAt(this->top, rng);						//inserts the top card at the random spot
+		//this->InsertAt(this->top, rng);					//inserts the top card at the random spot
+		
+		Card* swap = this->top;
+
+		for (int i = 2; i <= rng; ++i) {
+
+			swap = swap->GetNext();
+		}
+
+		Card* temp1 = this->top->GetPrev();
+
+		Card* temp2 = this->top->GetNext();
+
+		this->top->GetPrev()->SetNext(swap);
+		
+		this->top->SetPrev(swap->GetPrev());
+		
+		this->top->SetNext(swap->GetNext());
+
+		swap->GetPrev()->SetNext(this->top);
+		
+		swap->GetNext()->SetPrev(this->top);
+
+		swap->SetPrev(temp1);
+
+		swap->SetNext(temp2);
+
+		this->top = swap;
 
 		--count;
 
@@ -98,9 +135,9 @@ void Deck::InsertAt(Card* card, int index) {
 	
 	if (card == this->top) {
 
-		this->top->GetNext()->SetPrev(nullptr);
+		this->top->GetNext()->SetPrev(this->top->GetPrev());
 
-		this->top = card->GetNext();
+		this->top = this->top->GetNext();
 	}
 
 	else {
