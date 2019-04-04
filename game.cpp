@@ -12,14 +12,12 @@ Game::Game(std::vector<Player> players) {
 
 	this->deck.MakeFullDeck();
 
+	this->discard.Discard(deck.Draw());
 }
 
 void Game::DoNextTurn() {
 
-	for (int i = 0; i < this->numberOfPlayers; ++i) {
 
-
-	}
 
 }
 

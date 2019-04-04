@@ -31,7 +31,9 @@ void Player::SetIsComputer(bool isComputer) {
 
 std::string Player::TurnPrompt() {
 
-	return "";
+	std::string output = "";
+
+	return output + this->playerName + "'s turn";
 }
 
 std::string Player::ShowHand() {
