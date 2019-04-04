@@ -7,17 +7,67 @@ Hand::Hand() {
 
 void Hand::AddToHand(Card* card) {
 
-	this->lowestCard->SetPrev(card);
+	if (this->lowestCard->GetValue() != -1) {
 
-	card->SetNext(lowestCard);
-	
-	card->SetPrev(nullptr);
+		card->SetPrev(this->lowestCard->GetPrev());
+
+		card->SetNext(this->lowestCard);
+
+		this->lowestCard->GetPrev()->SetNext(card);
+
+		this->lowestCard->SetPrev(card);
+	}
+
+	else {
+
+		card->SetPrev(this->lowestCard);
+
+		card->SetNext(nullptr);
+	}
 	
 	this->lowestCard = card;
 }
 
 Card* Hand::SwapOutCard(Card* card, int position) {
+
+	Card* swap = this->lowestCard;
+
+	for (int i = 2; i <= position; ++i) {
+
+		swap = swap->GetNext();
+	}
+
+	if (position == 10) {
+		
+		swap->GetPrev()->SetNext(card);
+
+		card->SetPrev(swap->GetPrev());
+
+		swap->SetPrev(nullptr);
+
+		return swap;
+	}
+
+	swap->GetPrev()->SetNext(card);
 	
+	swap->GetNext()->SetPrev(card);
+
+	card->SetPrev(swap->GetPrev());
+
+	card->SetNext(swap->GetNext());
+
+	swap->SetPrev(nullptr);
+
+	swap->SetNext(nullptr);
+
+	if (swap == this->lowestCard) {
+
+		this->lowestCard = card;
+	}
+
+	return swap;
+	
+	/*
 	Card* temp = this->lowestCard;
 
 	for (int i = 2; i <= position; ++i) {
@@ -26,6 +76,7 @@ Card* Hand::SwapOutCard(Card* card, int position) {
 	} 
 
 	return temp;
+	*/
 }
 
 bool Hand::HasRacko() {
