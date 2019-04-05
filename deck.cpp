@@ -96,7 +96,7 @@ void Deck::Shuffle() {
 		
 		Card* swap = this->top;
 
-		for (int i = 2; i <= rng; ++i) {
+		for (int i = 2; i < rng; ++i) {
 
 			swap = swap->GetNext();
 		}
